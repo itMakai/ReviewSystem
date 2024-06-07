@@ -5,6 +5,7 @@ from django.db import models
 # Create your models here.
 class Student(models.Model):
     username = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     reg_no = models.CharField(max_length=10)
     email = models.EmailField()
     password = models.CharField(default=0000, max_length=100)
