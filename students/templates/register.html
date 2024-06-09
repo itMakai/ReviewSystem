@@ -1,0 +1,55 @@
+{%extends 'base.html'%}
+{%block main%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2>Register</h2>
+            <form method="POST" >
+                {%csrf_token%}
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" name="username">
+                </div>
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="name" name="name">
+              </div>
+              <div class="mb-3">
+                <label for="reg_no" class="form-label">reg_no</label>
+                <input type="text" class="form-control" id="reg_no" name="reg_no">
+            </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">email</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password1</label>
+                    <input type="password" class="form-control" id="password" name="password1">
+                </div>
+                <div class="mb-3">
+                  <label for="department" class="form-label">department</label>
+                  <input type="text" class="form-control" id="department" name="department">
+              </div>
+              <div class="mb-3">
+                <label for="year_of_study" class="form-label">year_of_study</label>
+                <input type="text" class="form-control" id="year_of_study" name="year_of_study">
+            </div>
+            <div class="mb-3">
+              <label for="course" class="form-label">course</label>
+              <input type="text" class="form-control" id="course" name="course">
+          </div>
+
+                <div class="mb-3">
+                    <label for="password2" class="form-label
+                    ">Confirm Password</label>
+                    <input type="password" class="form-control" id="password2" name="password2">
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+
+            <p>{{error_message}}</p>
+        </div>
+    </div>
+</div>
+{%endblock%}
