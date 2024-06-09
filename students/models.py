@@ -28,20 +28,15 @@ class Lecturer(models.Model):
     
     
     
-class Review(models.Model):
+class Review_detail(models.Model):
+    lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
-    review = models.TextField()
+    comment = models.TextField()
     rating = models.IntegerField()
-    date = models.DateField(default = timezone.now)
-    
+    review_date = models.DateField(default=timezone.now)
+
     def __str__(self):
-        return self.review
+        return f'Review for {self.lecturer.name} by {self.student.name}'
     
     
-class ReviewDetail(models.Model):
-    studentName = models.ForeignKey(Student, on_delete=models.CASCADE)
-    lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
-    review = models.ForeignKey(Review, related_name='review_details', on_delete=models.CASCADE)
-    rating = models.ForeignKey(Review, on_delete=models.CASCADE)
-    date_reviewed = models.DateTimeField(default=timezone.now)
+    
