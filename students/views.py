@@ -112,3 +112,10 @@ def review(request):
         return render(request, 'review.html', context)
     else:
         return render(request, 'review.html', {'success': 'thanks for your honest feedback'})
+
+def review_list(request):
+    reviews = Review_detail.objects.all()
+    context = {
+        'reviews': reviews
+    }
+    return render(request, 'review_list.html', context)
