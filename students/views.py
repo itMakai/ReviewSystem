@@ -23,61 +23,55 @@ def login_view(request):
             return render(request, 'login.html', context)
     else:
         return render(request, 'login.html')
-
-
+    
 def register_page(request):
     return render(request, 'register.html')
 
-
 def register(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        name = request.POST['name']
-        reg_no = request.POST['reg_no']
-        email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        department = request.POST['department']
-        year_of_study = request.POST['year_of_study']
-        course = request.POST['course']
-
+        username = request.POST["username"]
+        password1 = request.POST["password1"]
+        password2 = request.POST["password2"]
+        email = request.POST["email"]
+        first_name = request.POST["first_name"]
+        last_name =request.POST["last_name"]
+        program = request.POST["program"]
+        year_of_study = request.POST["year_of_study"]
+        reg_no = request.POST["reg_no"]
+        phone = request.POST["phone"]
+    
+        
         context = {
-            'username': username,
-            'email': email,
-            'name': name,
+            'username' : username,
+            'email' :email,
+            'first_name' :first_name,
+            'last_name' : last_name,
         }
-
+        
         if password1 != password2:
-            context = {
-                'error_message': 'Passwords must match. Please try again.'
-            }
+            context.update(
+                {
+                    'error_message': 'Passwards must match. please try again'
+                }
+            )
             return render(request, 'register.html', context)
-
+        
         if User.objects.filter(username=username).exists():
-            context = {'error_message': 'Username already exists'}
-            return render(request, 'register.html', context)
-
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password1
-        )
+            context.update(
+                {
+                    'error_message': 'username exists'
+                }
+            )
+            return render (request, 'register.html', context)
+        
+        user = User.objects.create_user(username=username, email=email, password=password1, first_name =first_name, last_name =last_name)
         user.save()
-
-        student = Student(
-            user=user,
-            name=name,
-            reg_no=reg_no,
-            department=department,
-            year_of_study=year_of_study,
-            course=course
-        )
+        
+        student = Student.objects.create(first_name =first_name, last_name =last_name, email=email, reg_no=reg_no, program=program, year_of_study=year_of_study, phone=phone, user=user)
         student.save()
-
-        return render(request, 'index.html', context)
-
-    else:
-        return render(request, 'register.html')
+        
+        print('user created')
+        
+        return render (request, 'login.html', context)
 
 
 def review(request):

@@ -1,21 +1,22 @@
 from datetime import timezone
 from django.utils import timezone
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Student(models.Model):
-    username = models.CharField(max_length=100)
-    name = models.CharField(max_length=100)
-    reg_no = models.CharField(max_length=10)
+    username = models.CharField(max_length=20)
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    phone = models.CharField(max_length=15)
     email = models.EmailField()
-    password = models.CharField(default=0000, max_length=100)
-    department = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     year_of_study = models.IntegerField()
-    course = models.CharField(max_length=100)
-    
+    program = models.CharField(max_length=100)
+    reg_no = models.CharField(max_length=100)
+
     def __str__(self):
-        return self.name
-    
+        return f'{self.first_name}'
     
 class Lecturer(models.Model):
     name = models.CharField(max_length=100)
@@ -36,7 +37,7 @@ class Review_detail(models.Model):
     review_date = models.DateField(default=timezone.now)
 
     def __str__(self):
-        return f'Review for {self.lecturer.name} by {self.student.name}'
+        return f'Review for {self.lecturer.name} by {self.student.first_name} on {self.review_date}'
     
     
     
