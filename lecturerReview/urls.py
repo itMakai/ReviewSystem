@@ -21,8 +21,8 @@ from students.views import home, login_view, register_page, review ,register, re
 urlpatterns = [
     path('admin/', admin.site.urls),
     
-    path('', home, name='home'),
-    path("login", login_view, name='login'),
+    path('home', home, name='home'),
+    path("", login_view, name='login'),
     path("register", register, name='register'),
     path("register_page", register_page, name='register_page'),
     path("review", review, name='review'),

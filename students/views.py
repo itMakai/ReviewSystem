@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from students.models import Student, Lecturer, Review_detail
@@ -66,7 +66,7 @@ def register(request):
         user = User.objects.create_user(username=username, email=email, password=password1, first_name =first_name, last_name =last_name)
         user.save()
         
-        student = Student.objects.create(first_name =first_name, last_name =last_name, email=email, reg_no=reg_no, program=program, year_of_study=year_of_study, phone=phone, user=user)
+        student = Student.objects.create(first_name =first_name, last_name =last_name, email=email, reg_no=reg_no, program=program, year_of_study=year_of_study, phone=phone, username=username, user=user)
         student.save()
         
         print('user created')
@@ -88,7 +88,7 @@ def review(request):
             return render(request, 'review.html', {'error': 'Lecturer does not exist'})
 
         try:
-            student = Student.objects.get(username=student_name)
+            student = Student.objects.get(first_name=student_name)
         except Student.DoesNotExist:
             return render(request, 'review.html', {'error': 'Student does not exist'})
 
@@ -108,11 +108,11 @@ def review(request):
             'rating': rating,
             'review_date': review_date
         }
-
-        return render(request, 'review.html', context)
+        return render(request, 'index.html', context={'success': 'thanks for your honest feedback'})
     else:
-        return render(request, 'review.html', {'success': 'thanks for your honest feedback'})
-
+       
+        return render(request, 'review.html', )
+    
 def review_list(request):
     reviews = Review_detail.objects.all()
     context = {

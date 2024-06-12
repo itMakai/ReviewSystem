@@ -2,17 +2,23 @@
 
 {% block main %}
 <h1>Reviews</h1>
-<ul>
-{% for review in reviews %}
-    <li>
-        <h2>{{ review.lecturer.name }}</h2>
-        <p>{{ review.comment }}</p>
-        <p>Rating: {{ review.rating }}</p>
-        <p>Reviewed by: {{ review.student.username }}</p>
-        <p>Review date: {{ review.review_date }}</p>
-    </li>
-{% empty %}
-    <li>No reviews yet.</li>
-{% endfor %}
-</ul>
+<div class="row">
+    {% for review in reviews %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ review.lecturer.name }}</h5>
+                <div class="card-text">{{ review.comment }}</div>
+                <div class="card-text">Rating: {{ review.rating }}</div>
+                <div class="card-text">Reviewed by: {{ review.student.first_name }}</div>
+                <div class="card-text">Review date: {{ review.review_date }}</div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <p>No reviews yet.</p>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
