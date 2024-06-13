@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from students.models import Student, Lecturer, Review_detail
-from django.http import HttpResponse
+from django.contrib.auth import logout
 
 # Create your views here.
 def home(request):
@@ -23,6 +23,13 @@ def login_view(request):
             return render(request, 'login.html', context)
     else:
         return render(request, 'login.html')
+    
+    
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')  # Redirect to home page after logout
     
 def register_page(request):
     return render(request, 'register.html')
