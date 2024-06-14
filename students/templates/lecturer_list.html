@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+
+{%block main%}
+<div class="container">
+  <h3>lecturers list</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Department</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for lecturer in lecturers%}
+      <tr>
+        <td>{{lecturer.name}}</td>
+        <td>{{lecturer.email}}</td>
+        <td>{{lecturer.department}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+{%endblock%}

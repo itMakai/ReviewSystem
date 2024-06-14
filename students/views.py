@@ -17,68 +17,94 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return render(request, 'review.html')
+            return redirect('home')
         else:
             context = {'error': 'Invalid username or password'}
             return render(request, 'login.html', context)
     else:
         return render(request, 'login.html')
-    
-    
-
 
 def logout_view(request):
     logout(request)
-    return redirect('home')  # Redirect to home page after logout
-    
+    return redirect('home')
+
+
 def register_page(request):
     return render(request, 'register.html')
 
 def register(request):
-        username = request.POST["username"]
-        password1 = request.POST["password1"]
-        password2 = request.POST["password2"]
-        email = request.POST["email"]
-        first_name = request.POST["first_name"]
-        last_name =request.POST["last_name"]
-        program = request.POST["program"]
-        year_of_study = request.POST["year_of_study"]
-        reg_no = request.POST["reg_no"]
-        phone = request.POST["phone"]
-    
-        
+    username = request.POST["username"]
+    password1 = request.POST["password1"]
+    password2 = request.POST["password2"]
+    email = request.POST["email"]
+    first_name = request.POST["first_name"]
+    last_name = request.POST["last_name"]
+    program = request.POST["program"]
+    year_of_study = request.POST["year_of_study"]
+    reg_no = request.POST["reg_no"]
+    phone = request.POST["phone"]
+
+    context = {
+        'username': username,
+        'email': email,
+        'first_name': first_name,
+        'last_name': last_name,
+    }
+
+    if password1 != password2:
+        context.update(
+            {
+                'error_message': 'Passwords must match. Please try again'
+            }
+        )
+        return render(request, 'register.html', context)
+
+    if User.objects.filter(username=username).exists():
+        context.update(
+            {
+                'error_message': 'Username exists'
+            }
+        )
+        return render(request, 'register.html', context)
+
+    user = User.objects.create_user(username=username, email=email, password=password1, first_name=first_name, last_name=last_name)
+    user.save()
+
+    student = Student.objects.create(first_name=first_name, last_name=last_name, email=email, reg_no=reg_no, program=program, year_of_study=year_of_study, phone=phone, username=username, user=user)
+    student.save()
+
+    print('User created')
+
+    return render(request, 'login.html', context)
+
+def lecturer(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        department = request.POST['department']
+
+        lecturer = Lecturer(
+            name=name,
+            email=email,
+            department=department,
+            )
+        lecturer.save()
+
         context = {
-            'username' : username,
-            'email' :email,
-            'first_name' :first_name,
-            'last_name' : last_name,
+            'name': name,
+            'email': email,
+            'department': department,
         }
-        
-        if password1 != password2:
-            context.update(
-                {
-                    'error_message': 'Passwards must match. please try again'
-                }
-            )
-            return render(request, 'register.html', context)
-        
-        if User.objects.filter(username=username).exists():
-            context.update(
-                {
-                    'error_message': 'username exists'
-                }
-            )
-            return render (request, 'register.html', context)
-        
-        user = User.objects.create_user(username=username, email=email, password=password1, first_name =first_name, last_name =last_name)
-        user.save()
-        
-        student = Student.objects.create(first_name =first_name, last_name =last_name, email=email, reg_no=reg_no, program=program, year_of_study=year_of_study, phone=phone, username=username, user=user)
-        student.save()
-        
-        print('user created')
-        
-        return render (request, 'login.html', context)
+        return render(request, 'index.html', context={'success': 'Lecturer added successfully'})
+    else:
+        return render(request, 'lecturer.html')
+
+def lecturer_list(request):
+    lecturers = Lecturer.objects.all()
+    context = {
+        'lecturers': lecturers
+    }
+    return render(request, 'lecturer_list.html', context)
 
 
 def review(request):
@@ -89,14 +115,17 @@ def review(request):
         rating = request.POST["rating"]
         review_date = request.POST["review_date"]
 
-        try:
+        lecturer = None
+        student = None
+
+        if Lecturer.objects.filter(name=lecturer_name).exists():
             lecturer = Lecturer.objects.get(name=lecturer_name)
-        except Lecturer.DoesNotExist:
+        else:
             return render(request, 'review.html', {'error': 'Lecturer does not exist'})
 
-        try:
+        if Student.objects.filter(first_name=student_name).exists():
             student = Student.objects.get(first_name=student_name)
-        except Student.DoesNotExist:
+        else:
             return render(request, 'review.html', {'error': 'Student does not exist'})
 
         review = Review_detail(
@@ -115,11 +144,10 @@ def review(request):
             'rating': rating,
             'review_date': review_date
         }
-        return render(request, 'index.html', context={'success': 'thanks for your honest feedback'})
+        return render(request, 'index.html', context={'success': 'Thanks for your honest feedback'})
     else:
-       
-        return render(request, 'review.html', )
-    
+        return render(request, 'review.html')
+
 def review_list(request):
     reviews = Review_detail.objects.all()
     context = {
