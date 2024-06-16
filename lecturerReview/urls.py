@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from students.views import home, login_view, register_page, review ,register, review_list, logout_view, lecturer, lecturer_list
+from students.views import home, login_view, register_page, review ,register, review_list, logout_view, lecturer, lecturer_list, contact
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,5 +30,6 @@ urlpatterns = [
     path("review_list", review_list, name="review_list"),
     path("logout", logout_view, name='logout'),
     path("lecturer", lecturer, name="lecturer"),
-    path("lecturer_list", lecturer_list, name="lecturer_list")
+    path("lecturer_list", lecturer_list, name="lecturer_list"),
+    path("contact", contact, name="contact")
 ]

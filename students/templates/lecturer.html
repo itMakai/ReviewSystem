@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {% block main %}
 <p>add a Lecturer</p>
-<form method="POST" >
+<form method="POST" class="">
   {% csrf_token %}
   <div class="mb-3">
     <label for="lecturerName" class="form-label">Lecturer Name</label>

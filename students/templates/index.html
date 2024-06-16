@@ -1,4 +1,121 @@
 {%extends 'base.html'%}
 {%block main%}
 
-{%endblock%}
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Lecturer Review</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#features">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="hero">
+  <div class="container">
+    <h1>Welcome to Lecturer Review</h1>
+    <p>Share your feedback and help improve the quality of education.</p>
+    <a href="#review-form" class="btn btn-primary btn-lg">Submit a Review</a>
+  </div>
+</header>
+
+<!-- About Section -->
+<section id="about" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2>About Us</h2>
+        <p>Lecturer Review is a platform where students can share their experiences and feedback about their lecturers. Our goal is to provide valuable insights to help improve teaching quality.</p>
+      </div>
+      <div class="col-lg-6">
+        <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/65626933112811.56a01870441f4.gif" class="img-fluid" alt="About Us">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5 bg-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <div class="mb-3">
+          <i class="features-icon fas fa-user"></i>
+        </div>
+        <h3>Easy to Use</h3>
+        <p>Our platform is user-friendly and easy to navigate.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="mb-3">
+          <i class="features-icon fas fa-star"></i>
+        </div>
+        <h3 >Reliable Reviews</h3>
+        <p>Get genuine feedback from students about their lecturers.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="mb-3">
+          <i class="features-icon fas fa-comments"></i>
+        </div>
+        <h3>Anonymous Feedback</h3>
+        <p>Share your thoughts anonymously to ensure honest reviews.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5">
+  <div class="container">
+    <h2 class="text-center">Contact Us</h2>
+    <p class="text-center">If you have any questions or feedback, feel free to reach out to us.</p>
+    <div class="row">
+      <div class="col-lg-6 mx-auto">
+        <form action="contact" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="contactName">Name</label>
+              <input type="text" class="form-control" id="contactName" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="contactEmail">Email</label>
+              <input type="email" class="form-control" id="contactEmail" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="contactMessage">Message</label>
+              <textarea class="form-control" id="contactMessage" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+          </form>
+          {{error_message}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4 bg-dark text-white-50">
+  <div class="container text-center">
+    <small>&copy; 2024 Lecturer Review. All Rights Reserved.</small>
+  </div>
+</footer>
+
+{% endblock %}
+

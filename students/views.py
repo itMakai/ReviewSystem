@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from students.models import Student, Lecturer, Review_detail
 from django.contrib.auth import logout
+from django.core.mail import send_mail
+from .forms import ContactForm
 
 # Create your views here.
 def home(request):
@@ -154,3 +156,31 @@ def review_list(request):
         'reviews': reviews
     }
     return render(request, 'review_list.html', context)
+
+
+
+
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+
+            send_mail(
+                'lecture Review Project',
+                f'Name: {name}\nEmail: {email}\nMessage: {message}',
+                email,
+                ['itsoftmak@gmail.com'],
+            )
+
+            return redirect('home')
+        else:
+            context = {'form': form, 'error_message': 'Invalid form data'}
+            return render(request, 'index.html', context)
+    else:
+        form = ContactForm()
+
+    return render(request, 'index.html', {'form': form})
