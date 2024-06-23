@@ -2,22 +2,38 @@
 {%block main%}
 <header class="hero">
   <div class="container">
+    {% if user.is_authenticated %}
+      {% if user.is_superuser %}
+    <h1>Welcome to Lecturer Review</h1>
+    <p>Manage reviews and see reviews made by students to their lecturers.</p>
+    {% else %}
     <h1>Welcome to Lecturer Review</h1>
     <p>Share your feedback and help improve the quality of education.</p>
-
-    {% if user.is_authenticated %}
+    {% endif %}
+    {% endif %}
+  
+    {% if user.is_authenticated %}  
+    {%if user.is_superuser%}
+    <a href="admin" class="btn btn-primary btn-lg">Admin Panel</a>
+    {%else%}
     <a href="review" class="btn btn-primary btn-lg">Submit a Review</a>
+    {%endif%}
     {% else %}
+    <h1>Welcome to Lecturer Review</h1>
+    <p>Share your feedback and help improve the quality of education.</p>
     <a href="login" class="btn btn-primary btn-lg">Login to Submit a Review</a>
     {% endif %}
+
   </div>
 </header>
 
 <!-- Review Form -->
+ {% if  not user.is_superuser %}
 <section id="about" class="py-5">
   <div class="container">
     <div class="row">
       <div class="col-lg-6">
+        
         <h2>About Us</h2>
         <p>Lecturer Review is a platform where students can share their experiences and feedback about their lecturers. Our goal is to provide valuable insights to help improve teaching quality.</p>
       </div>
@@ -93,6 +109,6 @@
     </div>
   </div>
 </section>
-
+{% endif %}
 {% endblock %}
 

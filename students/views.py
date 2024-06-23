@@ -5,6 +5,7 @@ from students.models import Student, Lecturer, Review_detail
 from django.contrib.auth import logout
 from django.core.mail import send_mail
 from .forms import ContactForm
+from datetime import datetime
 
 # Create your views here.
 def home(request):
@@ -112,10 +113,15 @@ def lecturer_list(request):
 def review(request):
     if request.method == 'POST':
         lecturer_name = request.POST['lecturer_name']
-        student_name = request.POST['student_name']
         comment = request.POST["comments"]
         rating = request.POST["rating"]
-        review_date = request.POST["review_date"]
+        review_date = datetime.now()
+        
+        
+        if request.user.is_authenticated:
+            student_name = request.user.first_name
+        else:
+            return render(request, 'review.html', {'error': 'You must be logged in to submit a review'})
 
         lecturer = None
         student = None
