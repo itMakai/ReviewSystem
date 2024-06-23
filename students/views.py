@@ -169,11 +169,20 @@ def contact(request):
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
 
+        
             send_mail(
-                'lecture Review Project',
+                'Lecture Review Project',
                 f'Name: {name}\nEmail: {email}\nMessage: {message}',
                 email,
                 ['itsoftmak@gmail.com'],
+            )
+
+            
+            send_mail(
+                'Confirmation from Lecture Review Project',
+                'Thank you for your message! We have received your submission and will get back to you soon.',
+                'itsoftmak@gmail.com', 
+                [email],
             )
 
             return redirect('home')

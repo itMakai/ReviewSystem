@@ -1,43 +1,19 @@
 {%extends 'base.html'%}
 {%block main%}
-
-
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="#">Lecturer Review</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#features">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#contact">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- Hero Section -->
 <header class="hero">
   <div class="container">
     <h1>Welcome to Lecturer Review</h1>
     <p>Share your feedback and help improve the quality of education.</p>
-    <a href="#review-form" class="btn btn-primary btn-lg">Submit a Review</a>
+
+    {% if user.is_authenticated %}
+    <a href="review" class="btn btn-primary btn-lg">Submit a Review</a>
+    {% else %}
+    <a href="login" class="btn btn-primary btn-lg">Login to Submit a Review</a>
+    {% endif %}
   </div>
 </header>
 
-<!-- About Section -->
+<!-- Review Form -->
 <section id="about" class="py-5">
   <div class="container">
     <div class="row">
@@ -53,8 +29,9 @@
 </section>
 
 <!-- Features Section -->
-<section id="features" class="py-5 bg-blue">
+<section id="features" class="py-5 bg-secondary">
   <div class="container">
+    <h2 class="text-white text-center">Key Features</h2>
     <div class="row">
       <div class="col-md-4 text-center">
         <div class="mb-3">
@@ -87,35 +64,35 @@
     <h2 class="text-center">Contact Us</h2>
     <p class="text-center">If you have any questions or feedback, feel free to reach out to us.</p>
     <div class="row">
-      <div class="col-lg-6 mx-auto">
-        <form action="contact" method="post">
+      <div class="container d-flex justify-content-center align-items-center" style="height: auto;">
+        <div class="form-container col-lg-6 mx-auto">
+          <h3 class="text-center">Contact Us</h3>
+          <form action="contact" method="post">
             {% csrf_token %}
-            <div class="form-group">
-              <label for="contactName">Name</label>
+            <div class="form-group mb-3">
+              <label for="contactName" class="form-label">Name</label>
               <input type="text" class="form-control" id="contactName" name="name" required>
             </div>
-            <div class="form-group">
-              <label for="contactEmail">Email</label>
+            <div class="form-group mb-3">
+              <label for="contactEmail" class="form-label">Email</label>
               <input type="email" class="form-control" id="contactEmail" name="email" required>
             </div>
-            <div class="form-group">
-              <label for="contactMessage">Message</label>
+            <div class="form-group mb-3">
+              <label for="contactMessage" class="form-label">Message</label>
               <textarea class="form-control" id="contactMessage" name="message" rows="4" required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+            <button type="submit" class="btn btn-primary">Send Message</button>
           </form>
-          {{error_message}}
+          {% if error_message %}
+          <div class="alert alert-danger mt-3" role="alert">
+            {{ error_message }}
+          </div>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- Footer -->
-<footer class="py-4 bg-dark text-white-50">
-  <div class="container text-center">
-    <small>&copy; 2024 Lecturer Review. All Rights Reserved.</small>
-  </div>
-</footer>
 
 {% endblock %}
 
