@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block main %}
+<style>
+  body {
+    background: url('https://cdn.dribbble.com/users/2444494/screenshots/6993792/_haracter__lecturer_.gif') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+  }
+  .content {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 50px;
+  }
+  .form-label {
+    color: #fff;
+  }
+</style>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 content">
+      <h2 class="text-center">Add a Lecturer</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="lecturerName" class="form-label">Lecturer Name</label>
+          <input type="text" class="form-control" id="lecturerName" name="name" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label for="department" class="form-label">Department</label>
+          <input type="text" class="form-control" id="department" name="department" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Submit Lecturer</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

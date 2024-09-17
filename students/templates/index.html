@@ -1,0 +1,114 @@
+{%extends 'base.html'%}
+{%block main%}
+<header class="hero">
+  <div class="container">
+    {% if user.is_authenticated %}
+      {% if user.is_superuser %}
+    <h1>Welcome to Lecturer Review</h1>
+    <p>Manage reviews and see reviews made by students to their lecturers.</p>
+    {% else %}
+    <h1>Welcome to Lecturer Review</h1>
+    <p>Share your feedback and help improve the quality of education.</p>
+    {% endif %}
+    {% endif %}
+  
+    {% if user.is_authenticated %}  
+    {%if user.is_superuser%}
+    <a href="admin" class="btn btn-primary btn-lg">Admin Panel</a>
+    {%else%}
+    <a href="review" class="btn btn-primary btn-lg">Submit a Review</a>
+    {%endif%}
+    {% else %}
+    <h1>Welcome to Lecturer Review</h1>
+    <p>Share your feedback and help improve the quality of education.</p>
+    <a href="login" class="btn btn-primary btn-lg">Login to Submit a Review</a>
+    {% endif %}
+
+  </div>
+</header>
+
+<!-- Review Form -->
+ {% if  not user.is_superuser %}
+<section id="about" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        
+        <h2>About Us</h2>
+        <p>Lecturer Review is a platform where students can share their experiences and feedback about their lecturers. Our goal is to provide valuable insights to help improve teaching quality.</p>
+      </div>
+      <div class="col-lg-6">
+        <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/65626933112811.56a01870441f4.gif" class="img-fluid" alt="About Us">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5 bg-secondary">
+  <div class="container">
+    <h2 class="text-white text-center">Key Features</h2>
+    <div class="row">
+      <div class="col-md-4 text-center">
+        <div class="mb-3">
+          <i class="features-icon fas fa-user"></i>
+        </div>
+        <h3>Easy to Use</h3>
+        <p>Our platform is user-friendly and easy to navigate.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="mb-3">
+          <i class="features-icon fas fa-star"></i>
+        </div>
+        <h3 >Reliable Reviews</h3>
+        <p>Get genuine feedback from students about their lecturers.</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="mb-3">
+          <i class="features-icon fas fa-comments"></i>
+        </div>
+        <h3>Anonymous Feedback</h3>
+        <p>Share your thoughts anonymously to ensure honest reviews.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5">
+  <div class="container">
+    <h2 class="text-center">Contact Us</h2>
+    <p class="text-center">If you have any questions or feedback, feel free to reach out to us.</p>
+    <div class="row">
+      <div class="container d-flex justify-content-center align-items-center" style="height: auto;">
+        <div class="form-container col-lg-6 mx-auto">
+          <h3 class="text-center">Contact Us</h3>
+          <form action="contact" method="post">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+              <label for="contactName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="contactName" name="name" required>
+            </div>
+            <div class="form-group mb-3">
+              <label for="contactEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="contactEmail" name="email" required>
+            </div>
+            <div class="form-group mb-3">
+              <label for="contactMessage" class="form-label">Message</label>
+              <textarea class="form-control" id="contactMessage" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+          {% if error_message %}
+          <div class="alert alert-danger mt-3" role="alert">
+            {{ error_message }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block main %}
+<style>
+  body {
+    /* background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjCsJwhIXBBJLS68B7Gf-jlfpp63nqEtwaiQ&s') no-repeat center center fixed; */
+    background-size: cover;
+    color: #fff;
+    background-color: black;
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+  }
+  .card-title, .card-text {
+    color: #000;
+  }
+</style>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Reviews</h1>
+  <div class="row">
+    {% for review in reviews %}
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ review.lecturer.name }}</h5>
+          <p class="card-text">{{ review.comment }}</p>
+          <p class="card-text"><strong>Rating:</strong> {{ review.rating }}</p>
+          <p class="card-text"><strong>Reviewed by:</strong> {{ review.student.first_name }}</p>
+          <p class="card-text"><strong>Review date:</strong> {{ review.review_date }}</p>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col">
+      <div class="alert alert-warning" role="alert">
+        No reviews yet.
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

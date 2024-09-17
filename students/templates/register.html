@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block main %}
+<style>
+  body {
+    background: url('https://blog.studentlifenetwork.com/wp-content/uploads/2018/10/SLN-Blog-Studying-1537x952.gif') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+  }
+  .content {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 50px;
+  }
+  .form-label {
+    color: #fff;
+  }
+</style>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 content">
+      {% if success %}
+        <div class="alert alert-success" role="alert">
+          {{ success }}
+        </div>
+      {% endif %}
+      <h2 class="text-center">Register</h2>
+      <form action="register" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="mb-3">
+          <label for="first_name" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="first_name" name="first_name" required>
+        </div>
+        <div class="mb-3">
+          <label for="last_name" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="last_name" name="last_name" required>
+        </div>
+        <div class="mb-3">
+          <label for="reg_no" class="form-label">Registration Number</label>
+          <input type="text" class="form-control" id="reg_no" name="reg_no" required>
+        </div>
+        <div class="mb-3">
+          <label for="program" class="form-label">Program</label>
+          <input type="text" class="form-control" id="program" name="program" required>
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="number" class="form-control" id="phone" name="phone" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password1" required>
+        </div>
+        <div class="mb-3">
+          <label for="password2" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="password2" name="password2" required>
+        </div>
+        <div class="mb-3">
+          <label for="year_of_study" class="form-label">Year of Study</label>
+          <input type="text" class="form-control" id="year_of_study" name="year_of_study" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+      </form>
+      {% if error_message %}
+        <div class="alert alert-danger mt-3" role="alert">
+          {{ error_message }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

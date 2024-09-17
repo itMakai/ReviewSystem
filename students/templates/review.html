@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<style>
+  body {
+    background: url('https://i.pinimg.com/originals/3b/3a/5b/3b3a5bb9671fa351a6127563ef0375f0.gif') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+  }
+  .form-container {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+  }
+  .form-label {
+    color: #fff;
+  }
+  .form-control {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  .btn-primary {
+    width: 100%;
+  }
+  .text-center {
+    color: #fff;
+  }
+</style>
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="form-container col-md-6">
+    <h3 class="text-center">Make Your Honest Review</h3>
+    <form method="POST">
+      {% csrf_token %}
+      {% if success %}
+      <div class="alert alert-success" role="alert">
+        {{ success }}
+      </div>
+      {% endif %}
+      <div class="mb-3">
+        <label for="lecturerName" class="form-label">Lecturer Name. i.e (DR.Mary)</label>
+        <input type="text" class="form-control" id="lecturerName" name="lecturer_name" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="comments" class="form-label">Your Comments</label>
+        <textarea class="form-control" id="comments" name="comments" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="rating" class="form-label">Rating (out of 10)</label>
+        <input type="number" class="form-control" id="rating" name="rating" min="1" max="10" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Review</button>
+    </form>
+    {% if error %}
+    <div class="alert alert-danger mt-3" role="alert">
+      {{ error }}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

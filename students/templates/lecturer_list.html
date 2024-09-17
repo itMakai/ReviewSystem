@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<style>
+  body {
+    background: url('https://cdn.dribbble.com/users/2444494/screenshots/6993792/_haracter__lecturer_.gif') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+  }
+  .content {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 50px;
+  }
+  .table th, .table td {
+    color: #0f0338;
+  }
+  .table thead th {
+    border-bottom: 2px solid #dee2e6;
+  }
+</style>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10 content">
+      <h3 class="text-center">Lecturers List</h3>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Department</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lecturer in lecturers %}
+          <tr>
+            <td>{{ lecturer.name }}</td>
+            <td>{{ lecturer.email }}</td>
+            <td>{{ lecturer.department }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

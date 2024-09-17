@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block main %}
+<style>
+  body {
+    background: url('https://cdn.dribbble.com/users/380268/screenshots/1187493/media/026dce85d10dab7d3b957f4c9c176db8.gif') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+  }
+  .login-container {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .form-label {
+    color: #fff;
+  }
+  .form-control {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  .btn-primary {
+    width: 100%;
+  }
+</style>
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="login-container col-md-4">
+    <h2 class="text-center mb-4">Login</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    {% if error %}
+    <div class="alert alert-danger mt-3" role="alert">
+      {{ error }}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
