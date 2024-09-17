@@ -1,0 +1,39 @@
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment directory
+env/
+venv/
+.env/
+
+# Ignore Django migration files
+*/migrations/
+!*/migrations/__init__.py
+
+# Ignore database files
+db.sqlite3
+*.sqlite3
+
+# Ignore static and media files
+/static/
+/media/
+
+# Ignore local configuration files
+.env
+.venv/
+.idea/
+.vscode/
+
+# Ignore logs
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.project
+.pydevproject
+.ropeproject
+
